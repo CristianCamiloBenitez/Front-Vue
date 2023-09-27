@@ -1,47 +1,90 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+
+//metodo
+const handleClick = (message) =>{
+  console.log(message);
+};
+
+//const arrayTareas = ref([])
+
+//arrayTareas.value.push()
+
+/*
+metodos
+  listarTareas(){
+
+  };
+
+  crearTarea(){
+
+  };
+  editarTarea(){
+
+  };
+  eliminarTarea(){
+
+  };
+  consultar(){
+
+  };*/
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="container text-center mt-3">
+    <header>
+      <h1>Taller CQRS</h1>
+    </header>
+    <div class="btn-group">
+      <button @:click="handleClick('Listar Tareas')" class="btn btn-primary">Lista</button>
+      <button v-on:click="handleClick('Crear Tareas')">Crear</button>
+      <button v-on:click="handleClick('Editar Tareas')">Editar</button>
+      <button v-on:click="handleClick('Eliminar Tareas')">Eliminar</button>
+      <button v-on:click="handleClick('consultar')">Consultar</button>
     </div>
-  </header>
+    <main>
+      <br/>
 
-  <main>
-    <TheWelcome />
-  </main>
+      <!---->
+      <!--mostrar lista-->
+      <!---->
+
+      <!--{{ arrayTareas }}
+      <ul class="list-group mt-4">
+        <li
+        v-for="(tarea, index) in arrayTareas" :key="index">{{ tarea }}</li>
+      </ul>
+      -->
+    </main>
+    <footer>
+      <p>Copyright 2023</p>
+    </footer>
+  </div>
+  
+
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+body{
+  font-family: sans-serif;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+header{
+  background-color:bisque;
+  color:black;
+  padding: 10px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+nav{
+  background-color: chartreuse;
+  padding: 10px;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+main{
+  padding: 10px;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+footer{
+  background-color: bisque;
+  padding: 10px;
 }
 </style>
