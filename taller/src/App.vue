@@ -64,6 +64,9 @@ metodos
 </template>
 
 <style>
+
+@import './assets/css/bootstrap.css';
+
 body{
   font-family: sans-serif;
 }
