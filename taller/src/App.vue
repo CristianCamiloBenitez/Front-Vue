@@ -34,24 +34,6 @@ const handleClick = (message) =>{
 
 //arrayTareas.value.push()
 
-/*
-metodos
-  listarTareas(){
-
-  };
-
-  crearTarea(){
-
-  };
-  editarTarea(){
-
-  };
-  eliminarTarea(){
-
-  };
-  consultar(){
-
-  };*/
 </script>
 
 <template>
@@ -67,9 +49,30 @@ metodos
       <a href="#/search" v-on:click="handleClick('Consultar Tarea')">Consultar</a>
     </div>
     <component :is="currentView"/>
-    <main>
-      <br/>
-
+    
+      <main>
+        <br/>
+        <div class="row">
+          <!-- Primera tabla -->
+          <div class="col">
+            <table class="table table-bordered">
+              <!-- Contenido de la primera tabla aquí -->
+            </table>
+          </div>
+          <!-- Segunda tabla -->
+          <div class="col">
+            <table class="table table-bordered">
+              <!-- Contenido de la segunda tabla aquí -->
+            </table>
+          </div>
+          <!-- Tercera tabla -->
+          <div class="col">
+            <table class="table table-bordered">
+              <!-- Contenido de la tercera tabla aquí -->
+            </table>
+          </div>
+        </div>
+      </main>
       <!---->
       <!--mostrar lista-->
       <!---->
@@ -80,7 +83,7 @@ metodos
         v-for="(tarea, index) in arrayTareas" :key="index">{{ tarea }}</li>
       </ul>
       -->
-    </main>
+
     <footer>
       <p>Copyright 2023</p>
     </footer>
@@ -115,5 +118,38 @@ main{
 footer{
   background-color: bisque;
   padding: 10px;
+}
+
+/* Estilo para las tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+/* Estilo para la fila de botones */
+.btn-group {
+  margin-top: 20px;
+}
+
+/* Estilo para las columnas que contienen las tablas */
+.col {
+  margin-bottom: 20px;
+}
+
+/* Media query para ajustar el diseño en pantallas más pequeñas */
+@media (max-width: 768px) {
+  .col {
+    width: 100%;
+  }
 }
 </style>
