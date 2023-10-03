@@ -4,10 +4,10 @@
     </div>
 
     <form action="/action_page.php">
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname" value="John"><br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="lname" value="Doe"><br><br>
+        <label for="NTask">Nombre Tarea:</label><br>
+        <input type="text" id="Ntask" name="NTask" ><br>
+        <label for="Description">Descripción:</label><br>
+        <input type="text" id="Description" name="Description" ><br><br>
         <select id="estado" name="estado">
         <option value="Completa">Completa</option>
         <option value="En Progreso">En Progreso</option>

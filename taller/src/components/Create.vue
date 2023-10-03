@@ -8,19 +8,14 @@
   method="post"
   autocomplete="on"
 >
-    <div class="form-item">
-    <label for="name">Full Name:</label>
-    <input
-      type="text"
-      name="name"
-      id="name"
-      v-model="name"
-      aria-labelledby="billing name"
-      aria-describedby="nameDescription"
-    />
-    <p id="nameDescription">Please provide first and last name.</p>
-  </div>
-  <button type="submit">Submit</button>
+    
+      <label for="NTask">Nombre Tarea:</label><br>
+      <input type="text" id="Ntask" name="NTask" ><br>
+      <label for="Description">Descripción:</label><br>
+      <input type="text" id="Description" name="Description" ><br><br>
+      
+      <input type="submit" value="Submit">
+
 </form>
 
 </template>
