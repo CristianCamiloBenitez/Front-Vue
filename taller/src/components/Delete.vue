@@ -16,6 +16,8 @@
     export default {
         name: 'Delete',
     }
+
+    //http://localhost:8080/write/tasks/delete
 </script>
 
 <script setup>

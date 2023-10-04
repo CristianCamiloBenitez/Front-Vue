@@ -18,7 +18,7 @@ COPY . .
 # Build app for production with minification
 RUN npm run build
 
-# Expose port 8080
+# Expose port
 EXPOSE 5173
 
 # Start the HTTP server with CORS headers
