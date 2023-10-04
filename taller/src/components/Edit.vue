@@ -78,12 +78,22 @@
         this.estado = item.completed; // Asignar directamente el valor booleano
       },
       actualizarTarea() {
+        let completed = false; // Por defecto, establece completed como false
+        
+        if (this.estado === 'Completa') {
+          completed = true;
+        }
+
         const datos = {
+          id: this.idTarea,
           title: this.nombreTarea,
           description: this.descripcion,
-          completed: this.estado, // Asignar directamente el valor booleano
+          completed: completed,
         };
-  
+
+        console.log('Datos que se enviarán al servidor:', datos);
+        //console.log('ID de la tarea a actualizar:', this.idTarea);
+
         axios.put(`http://localhost:8080/write/tasks/update/${this.idTarea}`, datos)
           .then((response) => {
             console.log('Tarea actualizada:', response.data);
@@ -94,14 +104,13 @@
             console.error('Error al actualizar tarea:', error);
           });
       },
+
     },
     created() {
       this.getTareas();
     },
   };
   </script>
-  
-  
   
   <style>
   @import '../assets/css/bootstrap.css';
