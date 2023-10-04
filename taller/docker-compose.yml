@@ -5,4 +5,4 @@ services:
       context: .
       dockerfile: Dockerfile-frontend
     ports:
-      - "8080:8080" # Mapeo del puerto del contenedor al puerto del host
+      - "5173:5173" # Mapeo del puerto del contenedor al puerto del host
