@@ -30,8 +30,7 @@ const handleClick = (message) =>{
   console.log(message);
 };
 
-//const arrayTareas = ref([])
-
+//
 //arrayTareas.value.push()
 
 </script>
@@ -73,16 +72,7 @@ const handleClick = (message) =>{
           </div>
         </div>
       </main>
-      <!---->
-      <!--mostrar lista-->
-      <!---->
-
-      <!--{{ arrayTareas }}
-      <ul class="list-group mt-4">
-        <li
-        v-for="(tarea, index) in arrayTareas" :key="index">{{ tarea }}</li>
-      </ul>
-      -->
+      
 
     <footer>
       <p>Copyright 2023</p>
