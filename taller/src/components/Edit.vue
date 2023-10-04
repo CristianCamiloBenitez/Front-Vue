@@ -44,6 +44,19 @@
     
         <input type="submit" value="Actualizar">
       </form>
+
+      <h2>Agregar Comentario y Adjunto</h2>
+
+    <form @submit.prevent="agregarComentarioYAdjunto">
+      <label for="comentario">Comentario:</label><br>
+      <textarea id="comentario" name="comentario" v-model="comentario"></textarea><br>
+
+      <label for="adjunto">Archivo Adjunto:</label><br>
+      <input type="file" id="adjunto" name="adjunto" v-on:change="adjuntoSeleccionado"><br>
+
+      <input type="submit" value="Agregar">
+    </form>
+  
     </div>
     <div>
       <button @click="goToApp" class="button volver">Volver</button>
@@ -62,6 +75,8 @@
         nombreTarea: '',
         descripcion: '',
         estado: true, // Cambiado a un valor booleano
+        comentario: '',
+        adjunto: null,
       };
     },
     methods: {
@@ -110,7 +125,44 @@
       goToApp() {
             // Redirige a la página principal (App.vue)
             window.location.href = '';
-      }
+      },
+      adjuntoSeleccionado(event) {
+        this.adjunto = event.target.files[0];
+      },
+      agregarComentarioYAdjunto() {
+        const tareaId = this.idTarea;
+
+        axios.post('http://localhost:8080/write/comments/create',{
+          task_id: tareaId,
+          comment_text: this.comentario,
+        })
+        .then((response) => {
+          console.log('',response.data);
+          this.comentario = '';
+        })
+        .catch((error) => {
+          console.error('Error al crear comentario:', error);
+        });
+
+        if (this.adjunto) {
+        const formData = new FormData();
+        formData.append('task_id', tareaId);
+        formData.append('file_name', this.adjunto.name);
+        formData.append('file_url', ''); // Debes proporcionar la URL adecuada aquí
+        formData.append('file_type', this.adjunto.type);
+
+        // Enviar archivo adjunto al backend
+        axios.post('http://localhost:8080/write/attachments/create', formData)
+          .then((response) => {
+            console.log('Archivo adjunto agregado:', response.data);
+            // Limpia el campo de archivo adjunto después de agregarlo
+            this.adjunto = null;
+          })
+          .catch((error) => {
+            console.error('Error al agregar archivo adjunto:', error);
+          });
+        }
+      },
 
     },
     created() {
