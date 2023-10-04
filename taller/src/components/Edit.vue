@@ -45,14 +45,21 @@
         <input type="submit" value="Actualizar">
       </form>
 
-      <h2>Agregar Comentario y Adjunto</h2>
+      <h2>Agregar Comentario</h2>
 
     <form @submit.prevent="agregarComentarioYAdjunto">
       <label for="comentario">Comentario:</label><br>
       <textarea id="comentario" name="comentario" v-model="comentario"></textarea><br>
 
-      <label for="adjunto">Archivo Adjunto:</label><br>
-      <input type="file" id="adjunto" name="adjunto" v-on:change="adjuntoSeleccionado"><br>
+      <h2>Agregar Archivo adjunto</h2>
+      <label for="name">Nombre de archivo:</label><br>
+      <input type="text" id="name" name="name" v-model="archivo.name"><br>
+
+      <label for="url">URL de archivo:</label><br>
+      <input type="text" id="url" name="url" v-model="archivo.url"><br>
+
+      <label for="type">Tipo de archivo:</label><br>
+      <input type="text" id="type" name="type" v-model="archivo.type"><br>
 
       <input type="submit" value="Agregar">
     </form>
@@ -76,7 +83,11 @@
         descripcion: '',
         estado: true, // Cambiado a un valor booleano
         comentario: '',
-        adjunto: null,
+        archivo: {
+          name: '',
+          url: '',
+          type: ''
+        }
       };
     },
     methods: {
@@ -130,40 +141,40 @@
         this.adjunto = event.target.files[0];
       },
       agregarComentarioYAdjunto() {
-        const tareaId = this.idTarea;
+      const tareaId = this.idTarea;
 
-        axios.post('http://localhost:8080/write/comments/create',{
-          task_id: tareaId,
-          comment_text: this.comentario,
-        })
+      axios.post('http://localhost:8080/write/comments/create', {
+        task_id: tareaId,
+        comment_text: this.comentario,
+      })
+      .then((response) => {
+        console.log('',response.data);
+        this.comentario = '';
+      })
+      .catch((error) => {
+        console.error('Error al crear comentario:', error);
+      });
+
+      const archivoDatos = {
+        task_id: tareaId,
+        file_name: this.archivo.name,
+        file_url: this.archivo.url,
+        file_type: this.archivo.type,
+      };
+
+      // Enviar archivo adjunto al backend
+      axios.post('http://localhost:8080/write/attachments/create', archivoDatos)
         .then((response) => {
-          console.log('',response.data);
-          this.comentario = '';
+          console.log('Archivo adjunto agregado:', response.data);
+          // Limpia los campos de archivo después de agregarlo
+          this.archivo.name = '';
+          this.archivo.url = '';
+          this.archivo.type = '';
         })
         .catch((error) => {
-          console.error('Error al crear comentario:', error);
+          console.error('Error al agregar archivo adjunto:', error);
         });
-
-        if (this.adjunto) {
-        const formData = new FormData();
-        formData.append('task_id', tareaId);
-        formData.append('file_name', this.adjunto.name);
-        formData.append('file_url', ''); // Debes proporcionar la URL adecuada aquí
-        formData.append('file_type', this.adjunto.type);
-
-        // Enviar archivo adjunto al backend
-        axios.post('http://localhost:8080/write/attachments/create', formData)
-          .then((response) => {
-            console.log('Archivo adjunto agregado:', response.data);
-            // Limpia el campo de archivo adjunto después de agregarlo
-            this.adjunto = null;
-          })
-          .catch((error) => {
-            console.error('Error al agregar archivo adjunto:', error);
-          });
-        }
-      },
-
+    },
     },
     created() {
       this.getTareas();

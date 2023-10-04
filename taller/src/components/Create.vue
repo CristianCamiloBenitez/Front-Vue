@@ -7,7 +7,7 @@
       <input type="text" id="nombreTarea" name="nombreTarea" v-model="nombreTarea"><br>
       <label for="descripcion">Descripción:</label><br>
       <input type="text" id="descripcion" name="descripcion" v-model="descripcion"><br><br>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Crear Tarea">
     </form>
 
     <div>

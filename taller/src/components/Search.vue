@@ -102,6 +102,43 @@ export default {
         <td>{{ item.completed }}</td>
       </tr>
     </tbody>
+    <button>Consultar</button>
+  </table>
+
+  <h1> Comentarios y Archivos adjuntos</h1>
+
+  <h2>Comentarios</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Comentario</th>
+        <th>Comentario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--<tr v-for="item in comentarios" :key="item.id"></tr>-->
+      <tr>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Archivos Adjuntos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Archivo</th>
+        <th>Nombre del Archivo</th>
+        <th>Url</th>
+        <th>Tipo de Archivo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--<tr v-for="item in archivos" :key="item.id"></tr>-->
+      <tr >
+
+      </tr>
+    </tbody>
   </table>
   <div>
     <button @click="goToApp" class="button volver">Volver</button>
