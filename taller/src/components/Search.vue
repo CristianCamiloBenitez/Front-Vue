@@ -2,95 +2,77 @@
     @import '../assets/css/bootstrap.css';
 </style>
 
-
 <script>
 import { ref, computed } from 'vue';
-import { gsap } from 'gsap';
+import axios from 'axios';
 
 export default {
+  name: 'List',
+  data() {
+    return {
+      listaTareas: [],
+      query: '',
+      filteredTareas: [],
+    };
+  },
   setup() {
-    const list = [
-      { code: '1', name: 'Bruce Lee', description: 'Martial artist' },
-      { code: '2', name: 'Jackie Chan', description: 'Actor and martial artist' },
-      { code: '3', name: 'Chuck Norris', description: 'Martial artist and actor' },
-      { code: '4', name: 'Jet Li', description: 'Martial artist and actor' },
-      { code: '5', name: 'Kung Fury', description: 'Action-comedy film character' },
-    ];
-
+    const listaTareas = ref([]);
     const query = ref('');
 
-    const computedList = computed(() => {
-      return list.filter(
+    const filteredTareas = computed(() => {
+      return listaTareas.value.filter(
         (item) =>
-          item.name.toLowerCase().includes(query.value) ||
+          item.title.toLowerCase().includes(query.value) ||
           item.description.toLowerCase().includes(query.value)
       );
     });
 
-    function onBeforeEnter(el) {
-      el.style.opacity = 0;
-      el.style.height = 0;
+    async function getTareas() {
+      try {
+        const response = await axios.get('http://localhost:8081/read/tasks/get_all');
+        console.log(response.data);
+        listaTareas.value = response.data;
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    function onEnter(el, done) {
-      gsap.to(el, {
-        opacity: 1,
-        height: '2em',
-        delay: el.dataset.index * 0.15,
-        onComplete: done,
-      });
-    }
-
-    function onLeave(el, done) {
-      gsap.to(el, {
-        opacity: 0,
-        height: 0,
-        delay: el.dataset.index * 0.15,
-        onComplete: done,
-      });
-    }
+    // Llama a la función getTareas en el setup
+    getTareas();
 
     return {
-      list,
+      listaTareas,
       query,
-      computedList,
-      onBeforeEnter,
-      onEnter,
-      onLeave,
+      filteredTareas,
     };
   },
 };
 </script>
 
 
-
 <template>
   <div>
-    <h2>Consultar Tareas</h2>
+    <h2>Listar Tareas</h2>
   </div>
 
-  <input v-model="query" />
+  <input v-model="query" placeholder="Buscar tareas" />
 
   <table>
     <thead>
       <tr>
         <th>ID</th>
-        <th>Nombre</th>
+        <th>Nombre Tarea</th>
         <th>Descripción</th>
+        <th>Completada</th>
       </tr>
     </thead>
-    <TransitionGroup
-      tag="tbody"
-      :css="false"
-      @before-enter="onBeforeEnter"
-      @enter="onEnter"
-      @leave="onLeave"
-    >
-      <tr v-for="(item, index) in computedList" :key="item.code" :data-index="index">
-        <td>{{ item.code }}</td>
-        <td>{{ item.name }}</td>
+    <tbody>
+      <tr v-for="item in filteredTareas" :key="item.id">
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
         <td>{{ item.description }}</td>
+        <td>{{ item.completed }}</td>
       </tr>
-    </TransitionGroup>
+    </tbody>
   </table>
 </template>
