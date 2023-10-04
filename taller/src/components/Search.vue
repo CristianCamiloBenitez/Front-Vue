@@ -3,52 +3,49 @@
 </style>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import axios from 'axios';
 
 export default {
   name: 'List',
-  data() {
-    return {
-      listaTareas: [],
-      query: '',
-      filteredTareas: [],
-    };
-  },
   setup() {
     const listaTareas = ref([]);
-    const query = ref('');
+    const query = ref(''); // Define 'query' aquí y establece un valor inicial vacío
 
     const filteredTareas = computed(() => {
       return listaTareas.value.filter(
         (item) =>
-          item.title.toLowerCase().includes(query.value) ||
-          item.description.toLowerCase().includes(query.value)
+          item.title.toLowerCase().includes(query.value.toLowerCase()) || // Buscar por título
+          item.id.toString().includes(query.value) || // Buscar por ID
+          item.completed.toString().includes(query.value) // Buscar por estado (completada)
       );
     });
 
     async function getTareas() {
       try {
         const response = await axios.get('http://localhost:8081/read/tasks/get_all');
-        console.log(response.data);
         listaTareas.value = response.data;
       } catch (error) {
         console.error(error);
       }
     }
 
-    // Llama a la función getTareas en el setup
+    // Llama a la función getTareas al inicio
     getTareas();
 
+    // Watcher para detectar cambios en 'query' y actualizar 'filteredTareas'
+    watch(query, () => {
+      // No es necesario llamar manualmente a 'getTareas' aquí,
+      // ya que el cambio en 'query' activará automáticamente el filtro
+    });
+
     return {
-      listaTareas,
       query,
       filteredTareas,
     };
   },
 };
 </script>
-
 
 <template>
   <div>
