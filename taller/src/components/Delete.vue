@@ -10,6 +10,10 @@
     <div>Eliminar Tarea de ID: {{ selected }}</div>
 
     <button @click="eliminarTareas">Eliminar</button>
+
+    <div>
+        <button @click="goToApp" class="button volver">Volver</button>
+    </div>
 </template>
 
 <script>
@@ -45,6 +49,10 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        goToApp() {
+            // Redirige a la página principal (App.vue)
+            window.location.href = '';
         }
     },
     created () {
@@ -59,4 +67,28 @@ export default {
     select[multiple] {
         width: 100px;
     }
+
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.volver {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.volver:hover {
+  background-color: #008CBA;
+  color: white;
+}
 </style>

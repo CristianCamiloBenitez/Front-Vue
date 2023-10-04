@@ -17,6 +17,8 @@ const routes = {
 }
 const currentPath = ref(window.location.hash)
 
+const showBody = ref(true);
+
 window.addEventListener('hashchange', () => {
   currentPath.value = window.location.hash
 })
@@ -25,14 +27,11 @@ const currentView = computed(() =>{
   return routes[currentPath.value.slice(1) || '/' || ErrorComponent]
 })
 
-//metodo
-const handleClick = (message) =>{
+const changeComponent = (componentName, message) => {
   console.log(message);
+  currentPath.value = `#/${componentName}`;
+  showBody.value = false; // Configura showParagraph en false al cambiar de componente
 };
-
-//
-//arrayTareas.value.push()
-
 </script>
 
 <template>
@@ -41,45 +40,23 @@ const handleClick = (message) =>{
       <h1>Taller CQRS</h1>
     </header>
     <div class="btn-group">
-      <a href="#/list" v-on:click="handleClick('Listar Tareas')">Listar</a> |
-      <a href="#/create" v-on:click="handleClick('Crear Tarea')">Crear</a> |
-      <a href="#/edit" v-on:click="handleClick('Editar Tarea')">Editar</a> |
-      <a href="#/delete" v-on:click="handleClick('Eliminar Tarea')">Eliminar</a> |
-      <a href="#/search" v-on:click="handleClick('Consultar Tarea')">Consultar</a>
+      <!-- Los enlaces para cambiar de componente -->
+      <a href="#/list" v-on:click="changeComponent('list', 'Listar Tareas')">Listar</a> 
+      <a href="#/create" v-on:click="changeComponent('create', 'Crear Tarea')">Crear</a> 
+      <a href="#/edit" v-on:click="changeComponent('edit', 'Editar Tarea')">Editar</a> 
+      <a href="#/delete" v-on:click="changeComponent('delete', 'Eliminar Tarea')">Eliminar</a> 
+      <a href="#/search" v-on:click="changeComponent('search', 'Consultar Tarea')">Consultar</a>
     </div>
     <component :is="currentView"/>
     
-      <main>
-        <br/>
-        <div class="row">
-          <!-- Primera tabla -->
-          <div class="col">
-            <table class="table table-bordered">
-              <!-- Contenido de la primera tabla aquí -->
-            </table>
-          </div>
-          <!-- Segunda tabla -->
-          <div class="col">
-            <table class="table table-bordered">
-              <!-- Contenido de la segunda tabla aquí -->
-            </table>
-          </div>
-          <!-- Tercera tabla -->
-          <div class="col">
-            <table class="table table-bordered">
-              <!-- Contenido de la tercera tabla aquí -->
-            </table>
-          </div>
-        </div>
-      </main>
-      
-
+    <div v-if="showBody">
+      <h2>Sistema de Gestión de Tareas</h2>
+    </div>
     <footer>
       <p>Copyright 2023</p>
     </footer>
   </div>
   
-
 </template>
 
 <style>
@@ -110,22 +87,6 @@ footer{
   padding: 10px;
 }
 
-/* Estilo para las tablas */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-table, th, td {
-  border: 1px solid #ccc;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-}
-
 /* Estilo para la fila de botones */
 .btn-group {
   margin-top: 20px;
@@ -141,5 +102,30 @@ th, td {
   .col {
     width: 100%;
   }
+}
+
+a:link, a:visited {
+  background-color: #2b90e7;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: rgb(0, 234, 255);
+}
+
+div{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+h2{
+  padding-top: 20px;
+  padding-bottom: 50px;
+  text-align: center;
+  font-size: large;
 }
 </style>
